@@ -2,6 +2,18 @@
 
 ## Seventh homework in Otus cpp course
 
+### Параметры
+```
+  -h [ --help ]           Print help message
+  -i [ --include ] arg    Directories to scan
+  -e [ --exclude ] arg    Directories to exclude
+  -d [ --depth ] arg (=0) Scanning depth
+  -m [ --filemask ] arg   Masks for files to scans
+  --minsize arg (=1)      Minimum file size in bytes
+  --blocksize arg (=512)  Block size in bytes
+  --hash arg (=crc32)     Hash algorithm (crc32/md5/sha1)
+```
+
 ### Условие
 Пользуясь имеющимися в библиотеке Boost структурами и алгоритмами
 разработать утилиту для обнаружения файлов-дубликатов.
@@ -72,6 +84,7 @@ ADE
 данные не читаются.
 Файлы считаются идентичными при полном совпадении последовательности
 хешей блоков.
+
 ### Самоконтроль
 * блок файла читается с диска не более одного раза
 * блок файла читается только в случае необходимости
@@ -80,6 +93,7 @@ ADE
 bintray
 * описание параметров в файле README.md корне репозитория
 * отправлена на проверку ссылка на страницу репозитория
+
 ### Проверка
 Задание считается выполнено успешно, если после просмотра кода,
 подключения репозитория, установки пакета и запуска бинарного файла
@@ -91,11 +105,5 @@ $ bayan [...]
 
 ### CI/CD
 Bintray: https://bintray.com/boristestov/boost_duplicates <br>
-Travis: https://travis-ci.com/github/BorisTestov/boost_duplicates
+Travis: https://travis-ci.com/github/BorisTestov/boost_duplicates <br>
 Github-pages: https://github.com/BorisTestov/boost_duplicates.github.io (https://boristestov.github.io/boost_duplicates.github.io/index.html)
-
-### TODO
-1. Добавить boost в travis и cmake
-2. Реализовать задачу, описанную в ТЗ
-3. Добавить тесты с файлами-дубликатами
-4. Добавить параметры в README
