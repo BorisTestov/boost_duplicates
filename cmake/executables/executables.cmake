@@ -1,9 +1,9 @@
 include_directories(${INCLUDE_DIR})
 
-file (GLOB SOURCES "${SRC_DIR}/*.cpp")
-file (GLOB HEADERS "${INCLUDE_DIR}/*.h" "${INCLUDE_DIR}/*.hpp")
+file(GLOB SOURCES "${SRC_DIR}/*.cpp")
+file(GLOB HEADERS "${INCLUDE_DIR}/*.h" "${INCLUDE_DIR}/*.hpp")
 
-find_package( Boost  COMPONENTS program_options filesystem regex REQUIRED)
+find_package(Boost 1.70 COMPONENTS program_options filesystem regex REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
