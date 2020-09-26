@@ -8,23 +8,47 @@
 class IHash
 {
 public:
-    virtual std::vector<unsigned int> Hash(const char* buffer, const unsigned int& buffer_size) = 0;
+    virtual std::vector<unsigned int> Hash(const char* buffer) = 0;
 };
 
+/**
+ * @brief Класс для хеширования методом SHA1
+ */
 class SHA1Hasher : public IHash
 {
 public:
-    virtual std::vector<unsigned int> Hash(const char* buffer, const unsigned int& buffer_size);
+    /**
+     * @brief Хеширование методо SHA1
+     * @param buffer - буффер для хеширования
+     * @return std::vector<unsigned int> - результат хеширования
+     */
+    std::vector<unsigned int> Hash(const char* buffer) override;
 };
 
+/**
+ * @brief Класс для хеширования методом CRC32
+ */
 class CRC32Hasher : public IHash
 {
 public:
-    virtual std::vector<unsigned int> Hash(const char* buffer, const unsigned int& buffer_size);
+    /**
+     * @brief Хеширование методо CRC32
+     * @param buffer - буффер для хеширования
+     * @return std::vector<unsigned int> - результат хеширования
+     */
+    std::vector<unsigned int> Hash(const char* buffer) override;
 };
 
+/**
+ * @brief Класс для хеширования методом MD5
+ */
 class MD5Hasher : public IHash
 {
 public:
-    virtual std::vector<unsigned int> Hash(const char* buffer, const unsigned int& buffer_size);
+    /**
+     * @brief Хеширование методо MD5
+     * @param buffer - буффер для хеширования
+     * @return std::vector<unsigned int> - результат хеширования
+     */
+    std::vector<unsigned int> Hash(const char* buffer) override;
 };
