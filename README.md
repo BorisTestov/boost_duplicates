@@ -12,6 +12,7 @@
   --minsize arg (=1)      Minimum file size in bytes
   --blocksize arg (=512)  Block size in bytes
   --hash arg (=crc32)     Hash algorithm (crc32/md5/sha1)
+  --version               Print version
 ```
 
 ### Условие

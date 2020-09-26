@@ -41,6 +41,9 @@ int main(int argc, char* argv[])
                                   boost::program_options::value<std::string>()->default_value("crc32"),
                                   "Hash algorithm (crc32/md5/sha1)");
 
+        description.add_options()("version",
+                                  "Print version");
+
         boost::program_options::variables_map variables;
         boost::program_options::store(parse_command_line(argc, argv, description), variables);
         boost::program_options::notify(variables);
@@ -48,6 +51,11 @@ int main(int argc, char* argv[])
         if (variables.count("help"))
         {
             std::cout << description << std::endl;
+            return 0;
+        }
+        if (variables.count("version"))
+        {
+            std::cout << version() << std::endl;
             return 0;
         }
         std::vector<std::string> include_dirs { "." };
