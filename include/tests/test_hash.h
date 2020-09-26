@@ -8,10 +8,6 @@ class TestHash : public QObject
 {
     Q_OBJECT
 private slots:
-    void TestMD5_data();
-    void TestMD5();
-    void TestCRC32_data();
-    void TestCRC32();
-    void TestSHA1_data();
-    void TestSHA1();
+    void Test_data();
+    void Test();
 };
