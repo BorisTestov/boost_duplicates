@@ -54,7 +54,7 @@ private:
     const unsigned int min_file_size_;
     std::shared_ptr<IHash> hasher_;
 
-    std::vector<HashedFile> files;
+    std::vector<HashedFile> files_;
     std::unordered_set<std::string> scanned_file_paths_;
 
     /**
@@ -71,4 +71,15 @@ private:
      * @return vector of filemasks as boost::regex
      */
     std::vector<boost::regex> SetFileMasks(const std::vector<std::string>& filemasks);
+
+    void ScanPath(const boost::filesystem::path& path, size_t depth);
+
+    void AddFile(const boost::filesystem::path& path);
+
+    bool InExcludeDirs(const boost::filesystem::path& path);
+
+    bool MasksSatisfied(const boost::filesystem::path& path);
+
+    bool AlreadyInDuplicates(const boost::filesystem::path& path,
+                             const std::unordered_map<std::string, std::vector<std::string>>& duplicates);
 };

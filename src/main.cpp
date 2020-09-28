@@ -64,13 +64,13 @@ int main(int argc, char* argv[])
         {
             include_dirs = variables["include"].as<std::vector<std::string>>();
         }
-        std::vector<std::string> exclude_dirs {};
+        std::vector<std::string> exclude_dirs;
         if (variables.count("exclude"))
         {
             exclude_dirs = variables["exclude"].as<std::vector<std::string>>();
         }
         size_t depth = variables["depth"].as<size_t>();
-        std::vector<std::string> masks { "*" };
+        std::vector<std::string> masks;
         if (variables.count("filemask"))
         {
             masks = variables["filemask"].as<std::vector<std::string>>();
@@ -83,12 +83,16 @@ int main(int argc, char* argv[])
         for (const auto& duplicate : duplicates)
         {
             std::cout << std::endl
-                      << duplicate.first << std::endl;
+                      << "Original file: " << std::endl
+                      << duplicate.first << std::endl
+                      << "Duplicates:" << std::endl;
             for (const std::string& found_duplicate : duplicate.second)
             {
                 std::cout << found_duplicate << std::endl;
             }
         }
+        std::cout << std::endl
+                  << "Total duplicates found: " << duplicates.size() << std::endl;
         return 0;
     }
     catch (const boost::program_options::error& ex)
