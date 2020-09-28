@@ -1,3 +1,4 @@
+#include "duplicate_finder.h"
 #include "version.h"
 
 #include <boost/program_options.hpp>
@@ -68,15 +69,26 @@ int main(int argc, char* argv[])
         {
             exclude_dirs = variables["exclude"].as<std::vector<std::string>>();
         }
-        [[maybe_unused]] size_t depth = variables["depth"].as<size_t>();
+        size_t depth = variables["depth"].as<size_t>();
         std::vector<std::string> masks { "*" };
         if (variables.count("filemask"))
         {
             masks = variables["filemask"].as<std::vector<std::string>>();
         }
-        [[maybe_unused]] uintmax_t min_size = variables["minsize"].as<uintmax_t>();
-        [[maybe_unused]] size_t block_size = variables["blocksize"].as<size_t>();
+        uintmax_t min_size = variables["minsize"].as<uintmax_t>();
+        size_t block_size = variables["blocksize"].as<size_t>();
         std::string hash = variables["hash"].as<std::string>();
+        DuplicateFinder duplicate_finder(include_dirs, exclude_dirs, masks, block_size, depth, min_size, hash);
+        auto duplicates = duplicate_finder.Find();
+        for (const auto& duplicate : duplicates)
+        {
+            std::cout << std::endl
+                      << duplicate.first << std::endl;
+            for (const std::string& found_duplicate : duplicate.second)
+            {
+                std::cout << found_duplicate << std::endl;
+            }
+        }
         return 0;
     }
     catch (const boost::program_options::error& ex)
