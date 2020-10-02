@@ -8,7 +8,15 @@
 class IHash
 {
 public:
+    // We have default copy constructor (delete), so we need to declare default here
+    IHash() = default;
     virtual std::vector<unsigned int> Hash(const char* buffer) = 0;
+    virtual ~IHash() = default;
+    // Rule of five methods. @see https://en.cppreference.com/w/cpp/language/rule_of_three
+    IHash(const IHash& other) = delete;            // Can't copy
+    IHash(IHash&& other) = delete;                 // Can't move
+    IHash& operator=(const IHash& other) = delete; // No copy assignment
+    IHash& operator=(IHash&& other) = delete;      // No move assignment
 };
 
 /**
@@ -17,6 +25,8 @@ public:
 class SHA1Hasher : public IHash
 {
 public:
+    SHA1Hasher() = default;
+
     /**
      * @brief Хеширование методо SHA1
      * @param buffer - буффер для хеширования
@@ -31,6 +41,8 @@ public:
 class CRC32Hasher : public IHash
 {
 public:
+    CRC32Hasher() = default;
+
     /**
      * @brief Хеширование методо CRC32
      * @param buffer - буффер для хеширования
@@ -45,6 +57,8 @@ public:
 class MD5Hasher : public IHash
 {
 public:
+    MD5Hasher() = default;
+
     /**
      * @brief Хеширование методо MD5
      * @param buffer - буффер для хеширования
