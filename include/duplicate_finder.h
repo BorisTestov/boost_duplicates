@@ -5,6 +5,7 @@
 
 #include <boost/filesystem.hpp>
 #include <boost/regex.hpp>
+#include <unordered_map>
 #include <unordered_set>
 
 /**

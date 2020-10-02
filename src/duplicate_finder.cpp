@@ -72,15 +72,15 @@ std::shared_ptr<IHash> DuplicateFinder::TrySetHasher(const std::string& hasher)
 {
     if (hasher == "md5")
     {
-        return std::make_unique<MD5Hasher>();
+        return std::make_shared<MD5Hasher>();
     }
     if (hasher == "sha1")
     {
-        return std::make_unique<SHA1Hasher>();
+        return std::make_shared<SHA1Hasher>();
     }
     if (hasher == "crc32")
     {
-        return std::make_unique<CRC32Hasher>();
+        return std::make_shared<CRC32Hasher>();
     }
     throw std::runtime_error("Hasher type doesn't recognized: " + hasher);
 }
