@@ -36,7 +36,7 @@ public:
      * @brief Find duplicate files
      * @return - map of duplicates: path to file and vector of duplicates
      */
-    std::unordered_map<std::string, std::vector<std::string>> Find();
+    std::unordered_map<std::string, std::unordered_set<std::string>> Find();
 
     /**
      * @brief Set directories from vector of strings
@@ -82,5 +82,5 @@ private:
     bool MasksSatisfied(const boost::filesystem::path& path);
 
     bool AlreadyInDuplicates(const boost::filesystem::path& path,
-                             const std::unordered_map<std::string, std::vector<std::string>>& duplicates);
+                             std::unordered_map<std::string, std::unordered_set<std::string>>& duplicates);
 };

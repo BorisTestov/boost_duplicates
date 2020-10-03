@@ -15,7 +15,7 @@ DuplicateFinder::DuplicateFinder(const std::vector<std::string>& include_dirs,
     min_file_size_(min_file_size),
     hasher_(TrySetHasher(hasher)) {}
 
-std::unordered_map<std::string, std::vector<std::string>> DuplicateFinder::Find()
+std::unordered_map<std::string, std::unordered_set<std::string>> DuplicateFinder::Find()
 {
     for (const auto& dir : include_dirs_)
     {
@@ -24,25 +24,34 @@ std::unordered_map<std::string, std::vector<std::string>> DuplicateFinder::Find(
             ScanPath(entry.path(), scan_depth_);
         }
     }
-    std::unordered_map<std::string, std::vector<std::string>> duplicates;
+    std::unordered_map<std::string, std::unordered_set<std::string>> duplicates;
     if (files_.size() < 2)
     {
         return duplicates;
     }
     for (auto first_file = std::begin(files_); first_file != end(files_); first_file++)
     {
-        if (not AlreadyInDuplicates(first_file->GetFilePath(), duplicates))
+        if (AlreadyInDuplicates(first_file->GetFilePath(), duplicates))
         {
-            for (auto second_file = std::begin(files_); second_file != end(files_); second_file++)
+            continue;
+        }
+        for (auto second_file = std::begin(files_); second_file != end(files_); second_file++)
+        {
+            if (AlreadyInDuplicates(second_file->GetFilePath(), duplicates))
             {
-                if (not AlreadyInDuplicates(second_file->GetFilePath(), duplicates) && first_file->GetFilePath() != second_file->GetFilePath())
-                {
-                    if (first_file->Equal(*second_file))
-                    {
-                        duplicates[first_file->GetFilePath().string()].emplace_back(
-                            second_file->GetFilePath().string());
-                    }
-                }
+                continue;
+            }
+            if (first_file->GetFilePath() == second_file->GetFilePath())
+            {
+                continue;
+            }
+            //            std::cout << first_file->GetFilePath() << " and " << second_file->GetFilePath() << " are equal: " << std::boolalpha << first_file->Equal(*second_file) << std::endl;
+            if (first_file->Equal(*second_file))
+            {
+                auto first_file_path = first_file->GetFilePath().string();
+                auto second_file_path = second_file->GetFilePath().string();
+                //                first_file->is_duplicate_
+                duplicates[first_file_path].insert(second_file_path);
             }
         }
     }
@@ -167,19 +176,16 @@ bool DuplicateFinder::MasksSatisfied(const boost::filesystem::path& path)
 }
 
 bool DuplicateFinder::AlreadyInDuplicates(const boost::filesystem::path& path,
-                                          const std::unordered_map<std::string, std::vector<std::string>>& duplicates)
+                                          std::unordered_map<std::string, std::unordered_set<std::string>>& duplicates)
 {
     bool already_in_duplicates = false;
     std::string filepath = path.string();
     for (const auto& duplicate : duplicates)
     {
-        for (const auto& duplicate_path : duplicate.second)
+        if (duplicate.second.find(path.string()) != duplicate.second.end())
         {
-            if (filepath == duplicate_path)
-            {
-                already_in_duplicates = true;
-                break;
-            }
+            already_in_duplicates = true;
+            break;
         }
     }
     return already_in_duplicates;
