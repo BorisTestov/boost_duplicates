@@ -45,12 +45,10 @@ std::unordered_map<std::string, std::unordered_set<std::string>> DuplicateFinder
             {
                 continue;
             }
-            //            std::cout << first_file->GetFilePath() << " and " << second_file->GetFilePath() << " are equal: " << std::boolalpha << first_file->Equal(*second_file) << std::endl;
             if (first_file->Equal(*second_file))
             {
                 auto first_file_path = first_file->GetFilePath().string();
                 auto second_file_path = second_file->GetFilePath().string();
-                //                first_file->is_duplicate_
                 duplicates[first_file_path].insert(second_file_path);
             }
         }

@@ -73,6 +73,7 @@ void HashedFile::CalcHashUntil(size_t block_index)
     while (hash_data_.size() <= block_index)
     {
         auto data = GetNextBlock().get();
+        std::cout << GetFilePath() << " : " << std::string(data).size() << " " << std::endl;
         hash_data_.emplace_back(HashNode { hasher_->Hash(data) });
     }
 }
